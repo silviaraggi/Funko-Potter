@@ -1,0 +1,606 @@
+<html><html>
+<head>
+	<head>
+		<title>Progetto Informatica Grafica</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+	</head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Funko Harry</title>
+	<script type='text/javascript' src='https://www.x3dom.org/download/x3dom.js'> </script>
+	<link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
+	<!-- Nav -->
+
+	<nav id="nav">
+		<ul>
+			<li><a href="../main.html"><span class="icon fa-home"></span></a></li>
+			<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
+			<li><a href="game.html" class="active"><span class="icon fa-play-circle-o"></span></a></li>
+		</ul>
+	</nav>
+		<section id="main">
+
+			<header id="header">
+				<div>Computer Graphic's Project</div>
+			</header>
+
+			<section id="banner">
+				<div class="inner">
+					<div class="media">
+					<h1 href="../gameplay/logo.png"><img src="../gameplay/logo.png" alt="" title="Logo del gioco" /></h1>
+					<h2>
+						Scegli modalità e personaggio con cui giocare
+					</h2>
+				</div>
+			</section>
+			<!-- Header -->
+
+		</section>
+
+
+	<script>
+
+		var giocatori;
+		var player1;
+		var player2;
+		var scelta;
+
+		var button1;
+		var button2;
+		var text1;
+		var text2;
+
+		var sinistra1;
+		var textsin1;
+		var destra1;
+		var textdes1;
+		var text3;
+		var text4;
+		var button3;
+
+		var image_harry;
+		var image_ron;
+		var image_hermy;
+		var image_vold;
+		var image_draco;
+
+
+
+		function init()
+		{
+		<!-- EventListeners ->
+			button1=document.getElementById("tasto1");
+			button2=document.getElementById("tasto2");
+			text1=document.getElementById("text1");
+			text2=document.getElementById("text2");
+
+			sinistra1=document.getElementById("freccia1");
+			destra1=document.getElementById("freccia2");
+			textsin1=document.getElementById("fretext1");
+			textdes1=document.getElementById("fretext2");
+			button3=document.getElementById("tasto3");
+			text3=document.getElementById("text3");
+			text4=document.getElementById("text4");
+
+			image_harry=document.getElementById("harry");
+			image_ron=document.getElementById("ron");
+			image_hermy=document.getElementById("hermione");
+			image_vold=document.getElementById("vold");
+			image_draco=document.getElementById("draco");
+		}
+
+		function giocatore1(){
+
+
+
+			var posbut1=button1.getFieldValue('translation');
+			var posbut2=button2.getFieldValue('translation');
+			var postext1=text1.getFieldValue('translation');
+			var postext2=text2.getFieldValue('translation');
+
+			var posfre1=sinistra1.getFieldValue('translation');
+			var postextsin1=textsin1.getFieldValue('translation');
+			var posfre2=destra1.getFieldValue('translation');
+			var postextdes1=textdes1.getFieldValue('translation');
+			var postext3=text3.getFieldValue('translation');
+			var posbut3=button3.getFieldValue('translation');
+
+			var player=document.getElementById("harry").getFieldValue('translation');
+
+			posbut1.x=posbut1.x+300;
+			posbut2.x=posbut2.x+300;
+			postext1.x=postext1.x+300;
+			postext2.x=postext2.x+300;
+
+			posfre1.x=posfre1.x-300;
+			postextsin1.x=postextsin1.x-300;
+			posfre2.x=posfre2.x-300;
+			postextdes1.x=postextdes1.x-300;
+			postext3.x=postext3.x-300;
+			posbut3.x=posbut3.x-300;
+
+			player.x=player.x-300;
+
+			button1.setFieldValue('translation', posbut1);
+			button2.setFieldValue('translation', posbut2);
+			text1.setFieldValue('translation', postext1);
+			text2.setFieldValue('translation', postext2);
+
+			sinistra1.setFieldValue('translation', posfre1);
+			textsin1.setFieldValue('translation', postextsin1);
+			destra1.setFieldValue('translation', posfre2);
+			textdes1.setFieldValue('translation', postextdes1);
+			text3.setFieldValue('translation', postext3);
+			button3.setFieldValue('translation', posbut3);
+
+			document.getElementById("harry").setFieldValue('translation', player);
+
+
+			giocatori=1;
+			player1=0;
+			scelta=1;
+
+
+
+		}
+		function giocatore2(){
+
+
+
+			var posbut1=button1.getFieldValue('translation');
+			var posbut2=button2.getFieldValue('translation');
+			var postext1=text1.getFieldValue('translation');
+			var postext2=text2.getFieldValue('translation');
+
+			var posfre1=sinistra1.getFieldValue('translation');
+			var postextsin1=textsin1.getFieldValue('translation');
+			var posfre2=destra1.getFieldValue('translation');
+			var postextdes1=textdes1.getFieldValue('translation');
+			var postext3=text3.getFieldValue('translation');
+			var posbut3=button3.getFieldValue('translation');
+
+			var player=document.getElementById("harry").getFieldValue('translation');
+
+			posbut1.x=posbut1.x+300;
+			posbut2.x=posbut2.x+300;
+			postext1.x=postext1.x+300;
+			postext2.x=postext2.x+300;
+
+			posfre1.x=posfre1.x-300;
+			postextsin1.x=postextsin1.x-300;
+			posfre2.x=posfre2.x-300;
+			postextdes1.x=postextdes1.x-300;
+			postext3.x=postext3.x-300;
+			posbut3.x=posbut3.x-300;
+
+			player.x=player.x-300;
+
+			button1.setFieldValue('translation', posbut1);
+			button2.setFieldValue('translation', posbut2);
+			text1.setFieldValue('translation', postext1);
+			text2.setFieldValue('translation', postext2);
+
+			sinistra1.setFieldValue('translation', posfre1);
+			textsin1.setFieldValue('translation', postextsin1);
+			destra1.setFieldValue('translation', posfre2);
+			textdes1.setFieldValue('translation', postextdes1);
+			text3.setFieldValue('translation', postext3);
+			button3.setFieldValue('translation', posbut3);
+
+			document.getElementById("harry").setFieldValue('translation', player);
+
+			giocatori=2;
+			player1=0;
+			scelta=1;
+
+
+		}
+
+		function sinistra(){
+			var posplayer;
+			if(scelta==1){
+				if(player1==0){
+					posplayer=document.getElementById("harry").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("harry").setFieldValue('translation', posplayer);
+				} else if (player1==1){
+					posplayer=document.getElementById("hermione").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("hermione").setFieldValue('translation', posplayer);
+				} else if (player1==2){
+					posplayer=document.getElementById("ron").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("ron").setFieldValue('translation', posplayer);
+				}
+				if(player1>0){
+					player1=(player1-1)%3;
+				} else {
+					player1=2;}
+				if(player1==0){
+					posplayer=document.getElementById("harry").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("harry").setFieldValue('translation', posplayer);
+				} else if (player1==1){
+					posplayer=document.getElementById("hermione").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("hermione").setFieldValue('translation', posplayer);
+				} else if (player1==2){
+					posplayer=document.getElementById("ron").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("ron").setFieldValue('translation', posplayer);
+				}
+			}
+			if(scelta==2){
+				if(player2==0){
+					posplayer=document.getElementById("vold").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("vold").setFieldValue('translation', posplayer);
+				} else if (player2==1){
+					posplayer=document.getElementById("draco").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("draco").setFieldValue('translation', posplayer);}
+				if(player2==1){
+					player2=0;
+				} else {
+					player2=1;}
+				if(player2==0){
+					posplayer=document.getElementById("vold").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("vold").setFieldValue('translation', posplayer);
+				} else if (player2==1){
+					posplayer=document.getElementById("draco").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("draco").setFieldValue('translation', posplayer);
+				}
+			}
+		}
+
+		function destra(){
+			if(scelta==1){
+				if(player1==0){
+					posplayer=document.getElementById("harry").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("harry").setFieldValue('translation', posplayer);
+				} else if (player1==1){
+					posplayer=document.getElementById("hermione").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("hermione").setFieldValue('translation', posplayer);
+				} else if (player1==2){
+					posplayer=document.getElementById("ron").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("ron").setFieldValue('translation', posplayer);
+				}
+				player1=(player1+1)%3;
+				if(player1==0){
+					posplayer=document.getElementById("harry").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("harry").setFieldValue('translation', posplayer);
+				} else if (player1==1){
+					posplayer=document.getElementById("hermione").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("hermione").setFieldValue('translation', posplayer);
+				} else if (player1==2){
+					posplayer=document.getElementById("ron").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("ron").setFieldValue('translation', posplayer);
+				}
+			}
+			if(scelta==2){
+				if(player2==0){
+					posplayer=document.getElementById("vold").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("vold").setFieldValue('translation', posplayer);
+				} else if (player2==1){
+					posplayer=document.getElementById("draco").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("draco").setFieldValue('translation', posplayer);}
+				if(player2==1){
+					player2=0;
+				} else {
+					player2=1;}
+				if(player2==0){
+					posplayer=document.getElementById("vold").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("vold").setFieldValue('translation', posplayer);
+				} else if (player2==1){
+					posplayer=document.getElementById("draco").getFieldValue('translation');
+					posplayer.x=posplayer.x-300;
+					document.getElementById("draco").setFieldValue('translation', posplayer);
+				}
+			}
+		}
+
+		function scelta_giocatore(){
+			var posplayer;
+			var postext1;
+			var postext2;
+			if (scelta==1){
+				if(player1==0){
+					posplayer=document.getElementById("harry").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("harry").setFieldValue('translation', posplayer);
+				} else if (player1==1){
+					posplayer=document.getElementById("hermione").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("hermione").setFieldValue('translation', posplayer);
+				} else if (player1==2){
+					posplayer=document.getElementById("ron").getFieldValue('translation');
+					posplayer.x=posplayer.x+300;
+					document.getElementById("ron").setFieldValue('translation', posplayer);
+				}
+				scelta=2;
+				player2=0;
+				posplayer=document.getElementById("vold").getFieldValue('translation');
+				posplayer.x=posplayer.x-300;
+				document.getElementById("vold").setFieldValue('translation', posplayer);
+				postext1=text3.getFieldValue('translation');
+				postext1.x=postext1.x+300;
+				text3.setFieldValue('translation', postext1);
+				postext2=text4.getFieldValue('translation');
+				postext2.x=postext2.x-300;
+				text4.setFieldValue('translation', postext2);
+
+			}else{
+			if(player1==0){
+				window.open("harry.html?myvar=" + encodeURI(giocatori) + "&myvar2=" + encodeURI(player2));
+				document.getElementById("sound").setFieldValue('enabled', 'false');}
+			if(player1==1){
+				window.open("hermione.html?myvar=" + encodeURI(giocatori) + "&myvar2=" + encodeURI(player2));
+				document.getElementById("sound").setFieldValue('enabled', 'false');}
+			if(player1==2){
+				window.open("ron.html?myvar=" + encodeURI(giocatori) + "&myvar2=" + encodeURI(player2));
+				document.getElementById("sound").setFieldValue('enabled', 'false');}
+			}
+		}
+	</script>
+	<style>
+
+
+		body
+		{
+
+			font-size:110%;
+			font-family:verdana, sans-serif;
+			background: #000;
+			margin: 5em;
+			color: lightgray;
+		}
+
+		h1
+		{
+			margin-top:0px;
+			font-family:Nunito Sans, sans-serif;
+			text-align: center;
+			color: gold;
+		}
+		h2
+		{
+			font-family:Nunito Sans, sans-serif;
+			text-align: center;
+			color: white;
+		}
+		buttonPlay{
+			-webkit-transition-duration: 0.4s; /* Safari */
+			transition-duration: 0.4s;
+		}
+		header {
+			font-weight: 700;
+		}
+		
+		centre{
+		margin-left:650px;
+		position:absolute;
+		}
+		centre_text{
+		margin-left:300px;
+		margin-top:300px;
+		position:absolute;
+		}
+	</style>
+</head>
+
+<centre>
+<x3d width="300px" height="300px">
+	<scene>
+	<navigationInfo type='"none"'></navigationInfo>
+		<transform id="hp" translation='0 0 3' scale='0.7 0.7 0.7' rotation='0 0 0 0'>
+			<inline url="../x3d/logohp.x3d"></inline>
+
+		</transform>
+		
+		<timeSensor DEF='clock' cycleInterval='8' loop='true'></timeSensor>
+		<orientationInterpolator DEF='spinThings' key='0 0.25 0.5 0.75 1' keyValue='0 1 0 0  0 1 0 1.57079  0 1 0 3.14159  0 1 0 4.71239  0 1 0 6.28317'></orientationInterpolator>
+
+		<ROUTE fromNode='clock' fromField='fraction_changed' toNode='spinThings' toField='set_fraction'></ROUTE>
+		<ROUTE fromNode='spinThings' fromField='value_changed' toNode='hp' toField='set_rotation'></ROUTE>
+		<SpotLight id='spot' on='TRUE' intensity='1' ambientIntensity='0.0000' color='1 1 1' location='2 0 9'  rotation='1 0 0 0.79' attenuation='0 0 0' radius='10.0000'> </PointLight>
+		<background  skyColor="0 0 0"></background>
+	</scene>
+</x3d>
+</centre>
+
+<body onload="init()">
+
+<centre_text>
+<x3d width='1000px' height='500px'>
+	<scene>
+
+
+		<transform id="harry" scale='7 3.5 1' translation='300 1 -0.1'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/harryinfo.jpg">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+		<transform id="ron" scale='7 3.5 1' translation='300 1 -0.1'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/roninfo.jpg">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+		<transform id="hermione" scale='7 3.5 1' translation='300 1 -0.1'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/hermyinfo.jpg">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+		<transform id="vold" scale='7 3.5 1' translation='300 1 -0.1'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/voldinfo.jpg">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+		<transform id="draco" scale='7 3.5 1' translation='300 1 -0.1'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/dracoinfo.jpg">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+
+		<navigationInfo type='"none"'></navigationInfo>
+		<transform id="text1" translation='-5 0 0' >
+			<shape>
+				<appearance>
+					<material -webkit-transition-duration: 0.4s; -duration: 0.4s;ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='Singolo giocatore' solid='false'>
+
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="tasto1" scale='3.5 0.6 1' translation='-5 0 0'>
+			<shape onclick="giocatore1();">
+				<appearance>
+
+					<material -webkit-transition-duration: 0.4s; -duration: 0.4s; diffuseColor='182, 146, 73' transparency='.8'></material>
+
+				</appearance>
+				<plane></plane>
+			</shape>
+		</transform>
+		<transform id="text2" translation='5 0 0'>
+			<shape>
+				<appearance>
+					<material -webkit-transition-duration: 0.4s; -duration: 0.4s; ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='Multigiocatore' solid='false'>
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="tasto2" scale='3.5 0.6 1' translation='4.8 0 0'>
+			<shape onclick="giocatore2();">
+				<appearance>
+					<material -webkit-transition-duration: 0.4s; -duration: 0.4s; diffuseColor='182, 146, 73' transparency='.8'></material>
+				</appearance>
+				<plane></plane>
+			</shape>
+		</transform>
+
+
+		<transform id="freccia1" scale='1 0.6 1' translation='293 -3.2 0'>
+			<shape onclick="sinistra();">
+				<appearance>
+					<material diffuseColor='182, 146, 73' transparency='.8'></material>
+				</appearance>
+				<plane></plane>
+			</shape>
+		</transform>
+		<transform id="fretext1" translation='293 -3.2 0'>
+			<shape>
+				<appearance>
+					<material ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='<=' solid='false'>
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="freccia2" scale='1 0.6 1' translation='307 -3.2 0'>
+			<shape onclick="destra();">
+				<appearance>
+					<material diffuseColor='182, 146, 73' transparency='.8'></material>
+				</appearance>
+				<plane></plane>
+			</shape>
+		</transform>
+		<transform id="fretext2" translation='307 -3.2 0'>
+			<shape>
+				<appearance>
+					<material ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='=>' solid='false'>
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="text3" translation='300 -3.2 0'>
+			<shape>
+				<appearance>
+					<material ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='Scegli giocatore' solid='false'>
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="text4" translation='300 -3.2 0'>
+			<shape>
+				<appearance>
+					<material ambientIntensity='0.0933' diffuseColor='182, 146, 73' shininess='0.51' specularColor='255, 235, 153'></material>
+				</appearance>
+				<text string='Scegli e gioca' solid='false'>
+					<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+				</text>
+			</shape>
+		</transform>
+		<transform id="tasto3" scale='3 0.6 1' translation='300 -3.2 0'>
+			<shape onclick="scelta_giocatore();">
+				<appearance>
+					<material diffuseColor='182, 146, 73' transparency='.8'></material>
+				</appearance>
+				<plane></plane>
+			</shape>
+		</transform>
+		<Sound>
+			<AudioClip id="sound" loop='true' enabled="true" url="../sound/harry_potter_soundtrack.mp3" />
+		</Sound>
+
+		<background  skyColor="0 0 0"></background>
+
+	</scene>
+</x3d>
+</centre_text>
+
+
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.poptrox.min.js"></script>
+<script src="../assets/js/jquery.scrolly.min.js"></script>
+<script src="../assets/js/skel.min.js"></script>
+<script src="../assets/js/util.js"></script>
+<script src="../assets/js/main.js"></script>
+
+</body>
+</html> 

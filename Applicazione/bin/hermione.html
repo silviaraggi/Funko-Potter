@@ -1,0 +1,803 @@
+<html><html>
+<head>
+	<head>
+		<title>Progetto Informatica Grafica</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+	</head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Funko Harry</title>
+	<script type='text/javascript' src='https://www.x3dom.org/download/x3dom.js'> </script>
+	<link rel='stylesheet' type='text/css' href='https://www.x3dom.org/download/x3dom.css'>
+	<!-- Nav -->
+	<nav id="nav">
+		<ul>
+			<li><a href="../main.html"><span class="icon fa-home"></span></a></li>
+			<li><a href="gallery.html"><span class="icon fa-camera-retro"></span></a></li>
+			<li><a href="game.html" class="active"><span class="icon fa-play-circle-o"></span></a></li>
+		</ul>
+	</nav>
+
+</head>
+
+<body onload="init()">
+
+<script>
+
+	var hero;
+	var enemy;
+	var atk1;
+	var atk2;
+	var diffhero=30;	//velocità attacco eroe
+	var diffenemy=37;	//velocità attacco nemico
+	var attaccoenemy=0;	//attacco nemico
+	var attaccohero=2;	//attacco eroe
+	var vitaenemy=0;	//vita nemico
+	var vitahero=24;	//vita eroe
+	var diff3=200;		//velocità movimento nemico
+	var diffnormal=200;	//velocità movimento nemico
+	var giocatori;
+	var playerenemy;
+	var atkherotim=0;	//flag attacco eroe
+	var atkenemytim=0;	//flag attacco nemico
+	var lifeprehero=24;	//variabile temporanea vita eroe
+	var lifepreenemy=24;//variabile temporanea vita nemico
+	var pausa=1;		//flag pausa
+	var score;			//stringa score
+	var score1=0;		//score giocatore1
+	var score2=0;		//scoe giocatore2
+	var vittoria=1;		//flag vittoria
+	var sconfitta=0;	//flag sconfitta
+	var interval;		//intervallo movimento nemico
+
+
+	function init()
+	{
+	<!-- EventListeners ->
+		var testo_enemy;
+		//salvataggio parametri passati
+		const urlParams = new URLSearchParams(window.location.search);
+		giocatori = urlParams.get('myvar');
+		playerenemy = urlParams.get('myvar2');
+		hero=document.getElementById('hermione');
+		score="Score: " + score1;
+		//settaggio grafica multigiocatore
+		if(giocatori==2){
+			document.getElementById('sfondosingle').setAttribute('scale','0 0 0');
+			document.getElementById('multi').setAttribute('set_bind','true');
+			document.getElementById('life1').setAttribute('translation','-5 9 -7.8');
+			document.getElementById('life1').setAttribute('scale','3 0.5 1');
+			document.getElementById('life1').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('sfondo_life1').setAttribute('translation','-5 8.9 -7.8');
+			document.getElementById('sfondo_life1').setAttribute('scale','3.1 0.6 1.1');
+			document.getElementById('sfondo_life1').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('life2').setAttribute('translation','5 9 -7.8');
+			document.getElementById('life2').setAttribute('scale','3 0.5 1');
+			document.getElementById('life2').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('sfondo_life2').setAttribute('translation','5 8.9 -7.8');
+			document.getElementById('sfondo_life2').setAttribute('scale','3.1 0.6 1.1');
+			document.getElementById('sfondo_life2').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_hermione').setAttribute('translation','-4.5 11 -8.9');
+			document.getElementById('testo_hermione').setAttribute('scale','1.8 1.8 1.8');
+			document.getElementById('testo_hermione').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('sfondo_hermione').setAttribute('translation','-4.5 10.75 -8.8');
+			document.getElementById('sfondo_hermione').setAttribute('scale','3.2 0.7 1.8');
+			document.getElementById('sfondo_hermione').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_vold').setAttribute('translation','4.5 11 91.1');
+			document.getElementById('testo_vold').setAttribute('scale','1.8 1.8 1.8');
+			document.getElementById('testo_vold').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_draco').setAttribute('translation','4.5 11 91.1');
+			document.getElementById('testo_draco').setAttribute('scale','1.8 1.8 1.8');
+			document.getElementById('testo_draco').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_pausa').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_vittoria').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('testo_sconfitta').setAttribute('rotation','-1 0 0 1.57');
+			document.getElementById('comandi1').setAttribute('scale','0 0 0');
+			if(playerenemy==0){
+			document.getElementById('sfondo_enemy').setAttribute('translation','4.6 10.7 -8.9');
+			document.getElementById('sfondo_enemy').setAttribute('scale','3.4 0.6 1.5');
+			document.getElementById('sfondo_enemy').setAttribute('rotation','-1 0 0 1.57');
+			}
+			if(playerenemy==1){
+			document.getElementById('sfondo_enemy').setAttribute('translation','4.6 10.5 -9');
+			document.getElementById('sfondo_enemy').setAttribute('scale','2 0.6 1.8');
+			document.getElementById('sfondo_enemy').setAttribute('rotation','-1 0 0 1.57');
+			}
+			score="Giocatore 1: " + score1 + " Giocatore2: " + score2;
+		}
+		else {
+			document.getElementById('sfondomulti').setAttribute('scale','0 0 0');
+			document.getElementById('comandi2').setAttribute('scale','0 0 0');
+		}
+		//passa stringa score HTML
+		document.getElementById("myText").innerHTML = score;
+		//settaggio gameplay e grafica voldemort/draco
+		if(playerenemy==0){
+			enemy=document.getElementById('vold');
+			testo_enemy=document.getElementById("testo_vold").getFieldValue('translation');
+			if(giocatori==1){
+			document.getElementById('sfondo_enemy').setAttribute('scale','3.7 .8 2');}
+			testo_enemy.z=testo_enemy.z-100;
+			document.getElementById("testo_vold").setFieldValue('translation', testo_enemy);
+			diffenemy=30
+			attaccoenemy=3
+			vitaenemy=24
+			lifepreenemy=24
+			document.getElementById('draco').setFieldValue('scale', '0 0 0');
+		}
+		if(playerenemy==1){
+			diffenemy=36
+			attaccoenemy=2
+			vitaenemy=18
+			lifepreenemy=18
+			enemy=document.getElementById('draco');
+			testo_enemy=document.getElementById("testo_draco").getFieldValue('translation');
+			testo_enemy.z=testo_enemy.z-100;
+			document.getElementById("testo_draco").setFieldValue('translation', testo_enemy);
+			document.getElementById('vold').setFieldValue('scale', '0 0 0');
+		}
+		atk1=document.getElementById('atk1');
+		atk2=document.getElementById('atk2');
+		randomEnemy();	//funzione movimento giocatore 
+		window.addEventListener("keydown", moveL);
+		window.addEventListener("keydown", moveR);
+		window.addEventListener("keydown", attack);
+		window.addEventListener("keydown", moveL2);
+		window.addEventListener("keydown", moveR2);
+		window.addEventListener("keydown", attack2);
+		window.addEventListener("keydown", pause);
+		window.addEventListener("keydown", pause_vittoria);
+		//settaggio intervallo funzione random
+		interval=setInterval(randomEnemy, diff3);
+
+	}
+	
+	//funzione movimento a sinistra
+	function moveL()
+	{
+		if(event.which==37&& pausa==0)
+		{
+			event.preventDefault(); //evita l`azione di default dei tasti (scorrimento della pagina web)
+			var pos = hero.getFieldValue('translation')
+			pos.x = pos.x - 0.5
+			if(pos.x <=-3.5){
+				pos.x = -3.5;}
+			hero.setFieldValue('translation', pos);
+		}
+	}
+	
+	//funzione movimento a destra
+	function moveR()
+	{
+		if(event.which==39&& pausa==0)
+		{
+			event.preventDefault();
+			var pos = hero.getFieldValue('translation')
+			pos.x = pos.x + 0.5
+			if(pos.x >=3.5){
+				pos.x = 3.5;}
+			hero.setFieldValue('translation', pos);
+		}
+	}
+	
+	//funzione attacco
+	function attack()
+	{
+		if(event.which==38&& pausa==0)
+		{
+			event.preventDefault();
+			if(atkherotim==0){
+				var pos = hero.getFieldValue('translation')
+				var dim = hero.getFieldValue('scale')
+				pos.y=pos.y-0.2
+				atk1.setFieldValue('translation', pos);
+				atk1.setFieldValue('scale', dim);
+				atkhero()
+				atkherotim=1;
+			}
+		}
+	}
+
+	//funzione movimento a sinistra giocatore 2
+	function moveL2()
+	{
+		if(event.which==65 && pausa==0 && giocatori==2 )
+		{
+			event.preventDefault(); //evita l`azione di default dei tasti (scorrimento della pagina web)
+			var pos = enemy.getFieldValue('translation')
+			pos.x = pos.x - 0.5
+			if(pos.x <=-3.5){
+				pos.x = -3.5;}
+			enemy.setFieldValue('translation', pos);
+		}
+	}
+	
+	//funzione movimento a destra giocatore 2
+	function moveR2()
+	{
+		if(event.which==68 && pausa==0 && giocatori==2)
+		{
+			event.preventDefault();
+			var pos = enemy.getFieldValue('translation')
+			pos.x = pos.x + 0.5
+			if(pos.x >=3.5){
+				pos.x = 3.5;}
+			enemy.setFieldValue('translation', pos);
+
+		}
+	}
+	
+	//funzione attacco giocatore 2
+	function attack2()
+	{
+		if(event.which==87 && pausa==0 && giocatori==2)
+		{
+			event.preventDefault();
+			if(atkenemytim==0){
+				var pos = enemy.getFieldValue('translation')
+				var dim = enemy.getFieldValue('scale')
+				pos.y=pos.y-0.2
+				atk2.setFieldValue('translation', pos);
+				atk2.setFieldValue('scale', dim);
+				atkenemy()
+				atkenemytim=1;
+			}
+		}
+	}
+
+	//funzione movimento sfera di attacco eroe
+	function atkhero()
+	{
+		var pos1 = atk1.getFieldValue('translation')
+		var posen = enemy.getFieldValue('translation')
+		console.log(pos1.x)
+
+		if(pausa==0){
+			//gestione collisioni
+			if(pos1.x>(posen.x-1)&&pos1.x<(posen.x+1)){
+				if(pos1.z>(posen.z-0.5)&&pos1.z<(posen.z+0.5)){
+					collisioneenemy();
+				}
+			}
+			//scomparsa sfera
+			if(pos1.z<=-6.25){
+				atk1.setFieldValue('scale', "0 0 0");
+				atkherotim=0;
+				return;
+			}
+
+			pos1.z = pos1.z - 0.75;
+			atk1.setFieldValue('translation', pos1)}
+
+		
+		window.setTimeout(atkhero, diffhero);
+	}
+
+	//funzione attacco nemico giocatore singolo
+	function attackenemy()
+	{
+		if(atkenemytim==0){
+			var pos = enemy.getFieldValue('translation')
+			var dim = enemy.getFieldValue('scale')
+			pos.y=pos.y-0.2
+			atk2.setFieldValue('translation', pos);
+			atk2.setFieldValue('scale', dim);
+			atkenemy()
+			atkenemytim=1;
+		}
+	}
+
+	//funzione movimento sfera di attacco nemico
+	function atkenemy()
+	{
+
+		var pos1 = atk2.getFieldValue('translation')
+		var poshe = hero.getFieldValue('translation')
+		console.log(pos1.x)
+		if(pausa==0){
+			//gestione collisione
+			if(pos1.x>(poshe.x-1)&&pos1.x<(poshe.x+1)){
+				if(pos1.z>(poshe.z-0.5)&&pos1.z<(poshe.z+0.5)){
+					collisionehero();
+				}
+			}
+			//scomparsa sfera
+			if(pos1.z>=6.25){
+				atk2.setFieldValue('scale', "0 0 0");
+				atkenemytim=0;
+				return;
+			}
+
+			pos1.z = pos1.z + 0.75;
+			atk2.setFieldValue('translation', pos1)}
+
+		
+		window.setTimeout(atkenemy, diffenemy);
+	}
+
+	//funzione movimento e attacco random nemico giocatore singolo
+	function randomEnemy()
+	{
+		var caso = Math.floor((Math.random() * 100) + 1);
+		var pos3 = enemy.getFieldValue('translation');
+		if(pausa==0 && giocatori!=2){
+			if(caso <= 33){
+				attackenemy()
+				return;}
+			if(caso>33&&caso<=67){
+				pos3.x = pos3.x+0.5;
+				if(pos3.x >=3.5){
+					pos3.x = 3.5;}
+				enemy.setFieldValue('translation', pos3);
+				return;
+			}
+			if(caso>67){
+				pos3.x=pos3.x-0.5;
+				if(pos3.x <= -3.5){
+					pos3.x=-3.5;}
+				enemy.setFieldValue('translation', pos3);
+				return;
+			}}
+	}
+
+	//funzione per diminuire la vita del nemico e nel caso di perdita totale della vita attraverso il settaggio di vari flag il gioco entra nella pausa	
+	//della vittoria o della sconfitta, modifica lo score, e in caso di vittoria durante una partita giocatore singolo rende il nemico più veloce 
+	function collisioneenemy()
+	{
+		var life=document.getElementById("life2").getFieldValue('scale')
+		var lifeh=document.getElementById("life1").getFieldValue('scale')
+		var spre=0;
+		var s=0;
+		var pospausa=document.getElementById("testo_vittoria").getFieldValue('translation');
+		spre=vitaenemy/lifepreenemy;
+		s=(lifepreenemy-attaccohero)/vitaenemy
+		if(s!=0){
+			lifepreenemy=lifepreenemy-attaccohero
+			life.x=life.x*spre*s;
+			document.getElementById("life2").setFieldValue('scale', life);
+			return;}
+		else if (s==0){
+			life.x=life.x*spre
+			spre=vitahero/lifeprehero;
+			lifeh.x=lifeh.x*spre
+			document.getElementById("life1").setFieldValue('scale', lifeh);
+			lifepreenemy=vitaenemy
+			lifeprehero=vitahero
+			document.getElementById("life2").setFieldValue('scale', life);
+			pospausa.z=pospausa.z-100
+			document.getElementById("testo_vittoria").setFieldValue('translation', pospausa);
+			vittoria=1;
+			pausa=1;
+			score1++;
+			if(giocatori==1){
+				diff3=diff3-10;
+				clearInterval(interval);
+				interval=setInterval(randomEnemy, diff3);
+				score="Score: " + score1;
+			}
+			if(giocatori==2){
+				score="Giocatore 1: " + score1 + " Giocatore 2: " + score2;
+			}
+			document.getElementById("myText").innerHTML = score;
+		}
+	}
+
+	//funzione per diminuire la vita dell'eroe e nel caso di perdita totale della vita attraverso il settaggio di vari flag il gioco entra nella pausa	
+	//della vittoria o della sconfitta, modifica lo score, e in caso di vittoria durante una partita giocatore singolo vi è la possibilità di riniziare
+	function collisionehero()
+	{
+		var life=document.getElementById("life2").getFieldValue('scale')
+		var lifeh=document.getElementById("life1").getFieldValue('scale')
+		var spre=0;
+		var s=0;
+		var pospausa=document.getElementById("testo_sconfitta").getFieldValue('translation');
+		spre=vitahero/lifeprehero;
+		s=(lifeprehero-attaccoenemy)/vitahero
+		if(s!=0){
+			lifeprehero=lifeprehero-attaccoenemy
+			lifeh.x=lifeh.x*spre*s;
+			document.getElementById("life1").setFieldValue('scale', lifeh);
+			return;}
+		else if (s==0){
+			lifeh.x=lifeh.x*spre
+			lifeprehero=vitahero
+			document.getElementById("life1").setFieldValue('scale', lifeh);
+			spre=vitaenemy/lifepreenemy;
+			life.x=life.x*spre
+			lifepreenemy=vitaenemy
+			document.getElementById("life2").setFieldValue('scale', life);
+			pospausa.z=pospausa.z-100
+			if(giocatori==1){
+				document.getElementById("testo_sconfitta").setFieldValue('translation', pospausa);
+				pausa=1;
+				sconfitta=1;
+				diff3=diffnormal;
+				clearInterval(interval);
+				interval=setInterval(randomEnemy, diff3);
+			}
+			if(giocatori==2){
+				score2++;
+				score="Giocatore 1: " + score1 + " Giocatore 2: " + score2;
+				document.getElementById("myText").innerHTML = score;
+				pausa=1;
+				vittoria=1;
+				document.getElementById("testo_vittoria").setFieldValue('translation', pospausa);
+			}
+		}
+	}
+
+	//funzione che setta la grafica della pausa
+	function pause(){
+		var pospausa=document.getElementById("testo_pausa").getFieldValue('translation');
+		event.preventDefault();
+		if(event.which==80&& pausa==0){
+			pospausa.z=pospausa.z-100
+			document.getElementById("testo_pausa").setFieldValue('translation', pospausa)
+			pausa=1;
+			return}
+		if(event.which==80&& pausa==1 && vittoria==0 && sconfitta==0){
+			pospausa.z=pospausa.z+100
+			document.getElementById("testo_pausa").setFieldValue('translation', pospausa)
+			pausa=0;
+			return}
+	}
+
+	//funzione che setta la grafica della pausa della vittoria/sconfitta
+	function pause_vittoria(){
+		var pospausa=document.getElementById("testo_vittoria").getFieldValue('translation');
+
+		event.preventDefault();
+		if(event.which==73&& (vittoria==1||sconfitta==1)){
+			if(vittoria==1){
+				pospausa=document.getElementById("testo_vittoria").getFieldValue('translation');
+				pospausa.z=pospausa.z+100
+				document.getElementById("testo_vittoria").setFieldValue('translation', pospausa)
+			}
+			if(sconfitta==1){
+				pospausa=document.getElementById("testo_sconfitta").getFieldValue('translation');
+				pospausa.z=pospausa.z+100
+				document.getElementById("testo_sconfitta").setFieldValue('translation', pospausa)
+				score1=0;
+				score="Score: " + score1;
+				document.getElementById("myText").innerHTML = score;
+			}
+
+			pausa=0;
+			vittoria=0;
+			sconfitta=0;
+			return}
+	}
+
+
+
+
+</script>
+<style>
+
+
+	body
+	{
+
+		font-size:110%;
+		font-family:verdana, sans-serif;
+		background: #000;
+		margin: 5em;
+		color: lightgray;
+	}
+
+	h1
+	{
+		text-align: center;
+		margin-top:0px;
+		margin-left: 350px;
+		font-family:Nunito Sans, sans-serif;
+		color: gold;
+		background-color: #555555;
+		transition-duration: 0.4s;
+		border-radius: 12px;
+		border: none;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+
+	}
+	h2
+	{
+		font-family:Nunito Sans, sans-serif;
+		text-align: center;
+		color: white;
+	}
+	buttonPlay{
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+	}
+	spostare{
+		margin-top: 100px;
+		margin-left: -50px;
+		position:absolute;
+	}
+	
+		spostare1{
+		margin-top: 200px;
+		position:absolute;
+	}
+	
+	spostare2{
+		margin-left: 800px;
+		margin-top: 200px;
+		position:absolute;
+	}
+	
+	logo{
+		margin-left: 600px;
+		margin-top: -180px;
+		position:absolute;
+	}
+
+</style>
+
+
+
+
+<spostare>
+<body>
+
+<h1><span id="myText"></span></h1>
+
+
+</body>
+</spostare>
+
+
+<div class="page-wrap">
+
+<logo>
+<img src="../gameplay/logo.png"/>
+</logo>
+
+<spostare1>
+	<x3d width='800px' height='700px' >
+		<scene>
+			<navigationInfo type='"none"'></navigationInfo>
+			<!-- Camere -->
+
+			<viewpoint id="single" position="0 10 20" orientation="1 0 0 -0.3"></viewpoint>
+
+			<viewpoint id="multi" position="0 29 -2" orientation="-1 0 0 1.57"></viewpoint>
+
+			<!-- base -->
+			<transform translation='-.5 0 0' scale='7 7 7' rotation='0 0 0 -1.57'>
+				<inline url="../x3d/Panca.x3d"></inline> <!-- Attenzione! Il tag di chiusura implicito non permette la visualizzazione di altri oggetti! -->
+			</transform>
+			
+			
+			<!-- hero -->
+			<!--<transform id="harry" translation='0 3.55 6.25' scale='0.2 0.2 0.2' rotation='0 0 0 -1.57'>
+				<inline url="x3d/harry.x3d"></inline>
+			</transform>-->
+			
+			<transform id="sfondosingle" scale='14.5 13 13' translation='0 1 -9' rotation='1 0 0 -0.3'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/sfondosingle.png">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+		
+		<transform id="sfondomulti" scale='15 15 15' translation='0 0 -3' rotation='1 0 0 -1.57'>
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/sfondomulti.png">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+
+			<transform id ="sfondo_life1" translation='-4 9 -0.1' scale='3.1 0.8 1.1' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='.451 .451 .451' transparency='.7'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+			
+			
+			<transform id ="life1" translation='-4 9 0' scale='3 0.7 1' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='0.149 0.302 0'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+			
+			<transform id ="sfondo_hermione" translation='-4 10.8 -0.1' scale='3.5 .8 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='.451 .451 .451' transparency='.7'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+
+
+			<transform id="testo_hermione" translation='-4 11 0' scale='2 2 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='0 0 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Hermione' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+			
+			<transform id ="sfondo_life2" translation='4 9 -0.1' scale='3.1 0.8 1.1' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='.451 .451 .451' transparency='.7'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+
+			<transform id ="life2" translation='4 9 0' scale='3 0.7 1' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='.502 0 0'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+			
+			<transform id ="sfondo_enemy" translation='4 10.8 -0.1' scale='2.2 .8 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material  diffuseColor='.451 .451 .451' transparency='.7'></material>
+					</appearance>
+					<plane></plane>
+				</shape>
+			</transform>
+			
+			<transform id="testo_vold" translation='4 11 100' scale='2 2 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='0 0 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Voldemort' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+			<transform id="testo_draco" translation='4 11 100' scale='2 2 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='0 0 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Draco' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+
+			<transform id="testo_pausa" translation='0 7 100' scale='2 2 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='.902 .7216 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Premi P per iniziare/pausa' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+
+			<transform id="testo_vittoria" translation='0 7 0' scale='1.3 1.5 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='.902 .7216 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Premi I per iniziare il prossimo round' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+
+			<transform id="testo_sconfitta" translation='0 7 100' scale='1.3 1.5 2' rotation='1 0 0 -0.3'>
+				<shape>
+					<appearance>
+						<material ambientIntensity='0.0933' diffuseColor='.902 .7216 0' shininess='0.51' specularColor='0 0 0'></material>
+					</appearance>
+					<text string='Premi I per riniziare dal primo livello' solid='false'>
+						<fontstyle family="'Nunito Sans' 'Arial'" size="0.8"></fontstyle>
+					</text>
+				</shape>
+			</transform>
+
+			<!--<transform id="ron" translation='0 3.55 6.25' scale='0.2 0.2 0.2' rotation='0 0 0 -1.57'>
+            <inline url="x3d/ron.x3d"></inline>
+            </transform>-->
+
+            <transform id="hermione" translation='0 3.55 6.25' scale='0.2 0.2 0.2' rotation='0 0 0 -1.57'>
+            <inline url="../x3d/hermione.x3d"></inline>
+            </transform>
+            </Switch>
+
+			<!-- enemy -->
+			<!--<Switch whichChoice="0" id="nemico">-->
+			<transform id="vold" translation='0 3.55 -6.25' scale='0.2 0.2 0.2' rotation='0 1 0 -3.14'>
+				<inline url="../x3d/vold.x3d"></inline>
+			</transform>
+
+			<transform id="draco" translation='0 3.55 -6.25' scale='0.2 0.2 0.2' rotation='0 1 0 -3.14'>
+				<inline url="../x3d/draco.x3d"></inline>
+			</transform>
+			<!-- attacchi-->
+			<transform id="atk1" translation='-3 1.20 -0.65' scale='0 0 0'><shape><appearance><material diffuseColor='blue' specularColor='blue' emissiveColor='blue'></appearance><sphere></sphere></shape></transform>
+			<transform id="atk2" scale='0 0 0'><shape><appearance><material diffuseColor='red' specularColor='red' emissiveColor='red'></appearance><sphere></sphere></shape></transform>
+			<!-- luci-->
+			<background  skyColor="166 166 166"></background>
+			<!--<DirectionalLight id="directional" direction='0 -1 0' on ="TRUE" intensity='0.4' shadowIntensity='0.0'></DirectionalLight>-->
+			<!--<PointLight id='point' on='TRUE' intensity='0.4000' ambientIntensity='0.0000' color='0.0 0.6 0.0' location='2 10 0.5 '  attenuation='0 0 0' radius='5.0000'> </PointLight>-->
+			<!--<SpotLight id='spot' on ="TRUE" beamWidth='0.4' color='1 1 1' cutOffAngle='0.78' location='0 0 12' radius='22' shadowIntensity='0.0'/></SpotLight>-->
+		</scene>
+	</x3d>
+</spostare1>
+
+<spostare2>
+	<x3d width='800px' height='700px' >
+		<scene>
+			<navigationInfo type='"none"'></navigationInfo>
+			<viewpoint  position="0 0 20" orientation="0 0 0 0"></viewpoint>
+			<transform id="comandi1" scale='6 8 8' translation='0 0 0' >
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/giocatore1.png">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+		<transform id="comandi2" scale='9 8 8' translation='0 0 0' >
+			<shape>
+				<appearance>
+					<ImageTexture url="../gameplay/giocatore2.png">
+						<ImageTexture/>
+				</appearance>
+				<plane> </plane>
+			</shape>
+		</transform>
+		<Sound>
+			<AudioClip id="sound" loop='true' enabled="true" url="../sound/battle.mp3" />
+		</Sound>
+		<background  skyColor="0 0 0"></background>
+		</scene>
+	</x3d>
+</spostare2>	
+
+
+
+
+
+</div>
+
+
+<script src="../assets/js/jquery.min.js"></script>
+<script src="../assets/js/jquery.poptrox.min.js"></script>
+<script src="../assets/js/jquery.scrolly.min.js"></script>
+<script src="../assets/js/skel.min.js"></script>
+<script src="../assets/js/util.js"></script>
+<script src="../assets/js/main.js"></script>
+<script src="../assets/js/Style-CSS(2).html"></script>
+</body>
+</html>
+
+
+
+
