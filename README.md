@@ -1,4 +1,5 @@
 #Funko-Potter
+
 Progetto per l'esame di Informatica Grafica (L.M. Ingegneria Informatica -PoliTo)
 
 Il progetto si divide in due parti:
