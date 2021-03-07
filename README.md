@@ -1,4 +1,4 @@
-#Funko Potter
+# Funko Potter
 
 Sito internat fittizio + applicazione interattiva a tema Harry Potter.
 Progetto per l'esame di Informatica Grafica (L.M. Ingegneria Informatica -PoliTo)
