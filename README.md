@@ -18,4 +18,4 @@ HTML + CSS
 Libreria grafica X3Dom
 JavaScript
 
-N.B= X3Dom potrebbe avere dei problemi di compatibilità con alcuni Browser, si consiglia di avviare il gioco su Microsoft Edge.
+N.B= X3Dom potrebbe avere dei problemi di compatibilità con alcuni Browser, si consiglia di avviare il gioco su Microsoft Edge, oppure scaricare  Web Server For Chrome creare un server locale e caricare il file di avvio
